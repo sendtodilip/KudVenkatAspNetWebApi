@@ -11,6 +11,7 @@ namespace EmployeeService.Controllers
 {
     //[EnableCorsAttribute("*","*","*")] 
     [EnableCorsAttribute("http://localhost:24369", "*","*")]
+    [RequireHttps]
     public class EmployeesController : ApiController
     {
         //[DisableCors]

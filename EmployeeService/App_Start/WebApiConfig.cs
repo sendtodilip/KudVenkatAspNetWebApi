@@ -41,8 +41,11 @@ namespace EmployeeService
             //Enable Cors
 
             //EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:8080/,http://pragimtech.com","*", "GET,POST");
-            EnableCorsAttribute cors = new EnableCorsAttribute("*","*","*");
-            config.EnableCors(cors);
+            //EnableCorsAttribute cors = new EnableCorsAttribute("*","*","*");
+            //config.EnableCors(cors);
+
+            //Enabling https for entire web API application
+            //config.Filters.Add(new RequireHttpsAttribute());
 
             //Enable cross domain ajax call thorugh JSONP
             //var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
