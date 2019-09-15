@@ -5,20 +5,35 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace EmployeeService.Controllers
 {
+    //[EnableCorsAttribute("*","*","*")] 
+    [EnableCorsAttribute("http://localhost:24369", "*","*")]
     public class EmployeesController : ApiController
     {
-
-        public IEnumerable<Employee> Get()
-       {
+        //[DisableCors]
+        [HttpGet]
+        public HttpResponseMessage LoadAllEmployees(string gender = "All")
+        {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
-                return entities.Employees.ToList();
+                switch (gender.ToLower())
+                {
+                    case "all":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
+                    case "male":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == gender.ToLower()).ToList());
+                    case "female":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == gender.ToLower()).ToList());
+                    default:
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Value for gender must be All, Male or Femable." + gender + " is invalid");
+                }
             }
         }
-        public HttpResponseMessage Get(int id)
+        [HttpGet]
+        public HttpResponseMessage LoadEmployeeById(int id)
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
@@ -78,7 +93,7 @@ namespace EmployeeService.Controllers
             }
         }
 
-        public HttpResponseMessage Put(int id, [FromBody]Employee employee)
+        public HttpResponseMessage Put([FromBody]int id, [FromUri]Employee employee)
         {
             try
             {
