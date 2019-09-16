@@ -4,20 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
 namespace EmployeeService.Controllers
 {
-    //[EnableCorsAttribute("*","*","*")] 
-    [EnableCorsAttribute("http://localhost:24369", "*","*")]
-    [RequireHttps]
+    //[EnableCorsAttribute("*", "*", "*")]
+    //[EnableCorsAttribute("*", "*", "*")]
+    //[RequireHttps]
     public class EmployeesController : ApiController
     {
         //[DisableCors]
         [HttpGet]
+        //[BasicAuthentication]
         public HttpResponseMessage LoadAllEmployees(string gender = "All")
         {
+            //string username = Thread.CurrentPrincipal.Identity.Name;
             using (EmployeeDBEntities entities = new EmployeeDBEntities())
             {
                 switch (gender.ToLower())
@@ -25,11 +28,12 @@ namespace EmployeeService.Controllers
                     case "all":
                         return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
                     case "male":
-                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == gender.ToLower()).ToList());
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == "male").ToList());
                     case "female":
-                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == gender.ToLower()).ToList());
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == "female").ToList());
                     default:
-                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Value for gender must be All, Male or Femable." + gender + " is invalid");
+                        return Request.CreateResponse(HttpStatusCode.BadRequest);
+                        //return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Value for gender must be All, Male or Femable." + gender + " is invalid");
                 }
             }
         }
