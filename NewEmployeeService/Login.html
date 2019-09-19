@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="padding-top:20px">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="well">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="success">
+                        <td colspan="2">
+                            Existing User Login
+                            <a class="btn btn-success pull-right" href="Register.html">Register</a>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Username</td>
+                        <td>
+                            <input type="text" id="txtUsername" placeholder="User Name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="password" id="txtPassword" placeholder="Password" /></td>
+                    </tr>
+                    <tr class="success">
+                        <td colspan="2">
+                            <input id="btnLogin" class="btn btn-success" type="button" value="Login" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="divError" class="alert alert-danger collapse">
+                <a id="lnkClose" class="close" href="#">&times;</a>
+                <div id="divErrorText"></div>
+            </div>
+        </div>
+        <script src="Scripts/jquery-3.3.1.min.js"></script>
+        <script src="Scripts/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#lnkClose').click(function () {
+                    $('#divError').hide('fade');
+                });
+                $('#btnLogin').click(function () {
+                    $.ajax({
+                        url: '/token',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        data: {
+                            username: $('#txtUsername').val(),
+                            password: $('#txtPassword').val(),
+                            grant_type: 'password'
+                        },
+                        success: function (response) {
+                            sessionStorage.setItem('accessToken', response.access_token);
+                            window.location.href = "Data.html";
+                        },
+                        error: function (jqXHR) {
+                            $('#divErrorText').text(jqXHR.responseText);
+                            $('#divError').show('fade');
+                        }
+                    });
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
