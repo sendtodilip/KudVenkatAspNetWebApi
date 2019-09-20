@@ -60,6 +60,7 @@
                         },
                         success: function (response) {
                             sessionStorage.setItem('accessToken', response.access_token);
+                            sessionStorage.setItem('userName', response.userName);
                             window.location.href = "Data.html";
                         },
                         error: function (jqXHR) {
