@@ -36,15 +36,37 @@
                 </tbody>
             </table>
 
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="success">
+                        <td>
+                            Social Logins
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="button" id="btnGoogleLogin" value="Login With Google" class="tbn  btn-success" /></td>
+                    </tr>
+                </tbody>
+            </table>
+
             <div id="divError" class="alert alert-danger collapse">
                 <a id="lnkClose" class="close" href="#">&times;</a>
                 <div id="divErrorText"></div>
             </div>
         </div>
         <script src="Scripts/jquery-3.3.1.min.js"></script>
+        <script src="Scripts/GoogleAuthentication.js"></script>
         <script src="Scripts/bootstrap.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
+                getAccessToken();
+
+                $('#btnGoogleLogin').click(function () {
+                    window.location.href = "/api/Account/ExternalLogin?provider=Google&response_type=token&client_id=self&redirect_uri=https%3A%2F%2Flocalhost%3A44332%2FLogin.html&state=nUm0ZEUUSIwOyorU32I_Bo-tfn4KaI9RljK2MMl8b8k1";
+                });
+
                 $('#lnkClose').click(function () {
                     $('#divError').hide('fade');
                 });

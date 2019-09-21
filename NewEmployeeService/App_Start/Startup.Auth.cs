@@ -59,11 +59,12 @@ namespace NewEmployeeService
             //    appId: "",
             //    appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                //Add your clientid and ClientSecret
+                ClientId = "apps.googleusercontent.com",
+                ClientSecret = "6E3b"
+            });
         }
     }
 }
