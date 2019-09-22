@@ -10,6 +10,8 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using NewEmployeeService.Providers;
 using NewEmployeeService.Models;
+using Microsoft.Owin.Security.Facebook;
+using NewEmployeeService.Facebook;
 
 namespace NewEmployeeService
 {
@@ -59,11 +61,20 @@ namespace NewEmployeeService
             //    appId: "",
             //    appSecret: "");
 
+            var facebookOptions = new FacebookAuthenticationOptions()
+            {
+                AppId = "your_app_id",
+                AppSecret= "your_app_secret",
+                BackchannelHttpHandler=new FacebookBackChannelHandler(),
+                UserInformationEndpoint= "https://graph.facebook.com/v2.4/me?fields=id,email"
+            };
+            facebookOptions.Scope.Add("email");
+            app.UseFacebookAuthentication(facebookOptions);
+
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                //Add your clientid and ClientSecret
-                ClientId = "apps.googleusercontent.com",
-                ClientSecret = "6E3b"
+                ClientId = "your_client_id",
+                ClientSecret = "your_client_secret"
             });
         }
     }

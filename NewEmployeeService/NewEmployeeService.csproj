@@ -228,6 +228,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EmployeeDataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Facebook\FacebookBackChannelHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
